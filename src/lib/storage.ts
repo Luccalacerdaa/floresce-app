@@ -2,7 +2,7 @@ import type { Answers } from "./quiz";
 
 const QUIZ_KEY = "fl_quiz";
 
-export type SavedQuiz = { answers: Answers; parentName: string; savedAt: string };
+export type SavedQuiz = { answers: Answers; parentName: string; seeds: number; savedAt: string };
 
 export function saveQuiz(data: SavedQuiz) {
   try {
