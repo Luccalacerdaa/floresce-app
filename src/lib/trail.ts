@@ -1,4 +1,5 @@
 // A trilha de 30 dias: uma missão da vida real por dia, cada uma rega uma planta do jardim.
+// Todas as 30 missões têm roteiro completo — sem dias bloqueados no protótipo.
 
 import type { PillarKey } from "./quiz";
 
@@ -54,7 +55,7 @@ const TITLES: [string, string][] = [
   ["Festa da colheita", "🏆"],
 ];
 
-const STICKERS = "🐶🐱🐰🦊🐻🐼🐨🐯🦁🐮🐷🐸🐵🐔🐧🐦🐤🦆🦉🐴🦄🐝🐛🦋🐌🐞🐢🐙🐠🐳";
+const STICKERS = "🐶🐱🐰🦊🐻🐼🐨🐯🦁🐮🐷🐸🐵🐔🐧🐦🐤🦉🦄🐛🦋🐞🐢🐙🐠🐳";
 
 export const TRAIL: TrailDay[] = TITLES.map(([title, emoji], i) => ({
   day: i + 1,
@@ -65,5 +66,5 @@ export const TRAIL: TrailDay[] = TITLES.map(([title, emoji], i) => ({
   sticker: [...STICKERS][i],
 }));
 
-/** No protótipo, só os 5 primeiros dias têm o roteiro completo. */
-export const PLAYABLE_DAYS = 5;
+/** Todas as 30 missões são jogáveis no protótipo. */
+export const PLAYABLE_DAYS = 30;

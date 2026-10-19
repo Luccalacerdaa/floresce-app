@@ -41,7 +41,7 @@ export const CHAPTERS: Chapter[] = [
     title: "Quem é a sementinha",
     emoji: "🌱",
     bg: "bg-sage-soft",
-    fact: "São 5 fases rapidinhas. A cada resposta você ganha sementes para o jardim de seu filho.",
+    fact: "São 5 fases rapidinhas. A cada resposta você ganha sementes para o jardim.",
   },
   {
     title: "Conversa",
@@ -53,7 +53,7 @@ export const CHAPTERS: Chapter[] = [
     title: "Olhar junto",
     emoji: "👀",
     bg: "bg-butter/40",
-    fact: "Olhar para um objeto e depois para você — a “atenção compartilhada” — é uma das bases da linguagem.",
+    fact: "Olhar para um objeto e depois para você — a \"atenção compartilhada\" — é uma das bases da linguagem.",
   },
   {
     title: "Hora de brincar",
@@ -85,11 +85,11 @@ export type Step =
 
 export type Answers = Record<string, string | string[]>;
 
-export const AGE_OPTIONS = ["12a18m", "18ma2a", "2a3a", "3a4a", "4a6a"] as const;
-const WORD_LEVELS = ["nenhuma", "1a10", "10a50", "duas", "frases"] as const;
+export const AGE_OPTIONS = ["12a18m", "18ma2a", "2a3a", "3a4a", "4a6a", "6a8a", "8a12a", "12a17a"] as const;
+const WORD_LEVELS = ["nenhuma", "1a10", "10a50", "duas", "frases", "complexas"] as const;
 // Nível de palavras esperado (aproximado) para cada faixa de idade, usado só para não
 // penalizar os menores no perfil.
-const EXPECTED_WORD_LEVEL = [1, 2, 3, 4, 4];
+const EXPECTED_WORD_LEVEL = [1, 2, 3, 4, 4, 5, 5, 5];
 
 export const STEPS: Step[] = [
   // Fase 1 — Quem é a sementinha
@@ -112,6 +112,9 @@ export const STEPS: Step[] = [
       { id: "2a3a", label: "2 a 3 anos", emoji: "🧸" },
       { id: "3a4a", label: "3 a 4 anos", emoji: "🎈" },
       { id: "4a6a", label: "4 a 6 anos", emoji: "🚲" },
+      { id: "6a8a", label: "6 a 8 anos", emoji: "📚" },
+      { id: "8a12a", label: "8 a 12 anos", emoji: "🎒" },
+      { id: "12a17a", label: "12 a 17 anos", emoji: "🌟" },
     ],
   },
   {
@@ -133,13 +136,14 @@ export const STEPS: Step[] = [
     chapter: 1,
     id: "palavras",
     title: "Quantas palavras {nome} usa hoje?",
-    subtitle: "Vale palavra incompleta, como “aga” para água.",
+    subtitle: "Vale palavra incompleta, como \"aga\" para água.",
     options: [
       { id: "nenhuma", label: "Nenhuma ainda", emoji: "🤫" },
       { id: "1a10", label: "De 1 a 10", emoji: "🌱" },
       { id: "10a50", label: "De 10 a 50", emoji: "🌿" },
       { id: "duas", label: "Junta duas palavras", emoji: "🔗" },
       { id: "frases", label: "Fala frases", emoji: "💬" },
+      { id: "complexas", label: "Frases complexas", emoji: "📝" },
     ],
   },
   {
@@ -214,7 +218,7 @@ export const STEPS: Step[] = [
     options: [
       { id: "repete", label: "Enfileira, gira ou repete o mesmo movimento", emoji: "🧩", score: { brincar: 0.25 } },
       { id: "troca", label: "Explora rápido e troca toda hora", emoji: "🧭", score: { brincar: 0.4 } },
-      { id: "funcional", label: "Usa como “de verdade”: o carrinho anda", emoji: "🔧", score: { brincar: 0.75 } },
+      { id: "funcional", label: "Usa como \"de verdade\": o carrinho anda", emoji: "🔧", score: { brincar: 0.75 } },
       { id: "faz-de-conta", label: "Faz de conta: dá comida à boneca", emoji: "📖", score: { brincar: 1 } },
     ],
   },
@@ -394,7 +398,7 @@ export const PLAY_STYLES: Record<
     emoji: "🔧",
     bg: "from-butter to-clay-soft",
     tagline: "Quer descobrir como as coisas funcionam.",
-    tip: "Brinquedos de causa e efeito: apertar, empurrar, encaixar. Faça uma pausa antes do “efeito” e espere um pedido.",
+    tip: "Brinquedos de causa e efeito: apertar, empurrar, encaixar. Faça uma pausa antes do \"efeito\" e espere um pedido.",
   },
   contador: {
     name: "Contador de histórias",
@@ -494,7 +498,7 @@ export function computeProfile(answers: Answers): Profile {
       id: "sem-palavras",
       text: `${name} ainda não usa palavras. A partir de 1 ano e meio, vale conversar com o pediatra ou com uma fonoaudióloga.`,
     });
-  } else if (ageIndex >= 2 && wordLevel === 1) {
+  } else if (ageIndex >= 2 && wordLevel <= 1) {
     flags.push({
       id: "poucas-palavras",
       text: `Para a idade de ${name}, costuma-se esperar mais palavras e as primeiras combinações. Uma avaliação com fonoaudióloga pode ajudar.`,

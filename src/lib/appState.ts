@@ -5,6 +5,25 @@ import type { GrowthStage } from "@/components/art/Garden";
 import { computeProfile, STAGES, type PillarKey } from "./quiz";
 import { loadQuiz } from "./storage";
 
+export type RewardItem = {
+  id: string;
+  name: string;
+  emoji: string;
+  cost: number;
+  description: string;
+};
+
+export const REWARD_CHEST: RewardItem[] = [
+  { id: "adesivo-estrela", name: "Adesivo Estrela", emoji: "⭐", cost: 100, description: "Uma estrela dourada para colar onde quiser!" },
+  { id: "coroa-rei", name: "Coroa de Rei/Rainha", emoji: "👑", cost: 200, description: "Por 1 hora você é o rei ou rainha da casa!" },
+  { id: "historia-extra", name: "História Extra", emoji: "📚", cost: 150, description: "Uma história a mais antes de dormir." },
+  { id: "parque", name: "Passeio no Parque", emoji: "🌳", cost: 500, description: "Um passeio especial no parque juntos!" },
+  { id: "sorvete", name: "Sorvete Especial", emoji: "🍦", cost: 300, description: "Escolher o sabor favorito de sorvete!" },
+  { id: "filme-familia", name: "Filme em Família", emoji: "🎬", cost: 250, description: "Escolher o filme da noite em família." },
+  { id: "brinquedo-novo", name: "Brinquedinho Novo", emoji: "🧸", cost: 800, description: "Um brinquedo simples escolhido juntos." },
+  { id: "picnic", name: "Piquenique", emoji: "🧺", cost: 600, description: "Um piquenique especial no quintal ou parque." },
+];
+
 export type AppState = {
   childName: string;
   seeds: number;
@@ -17,6 +36,7 @@ export type AppState = {
   milestones: string[];
   screen: { day: string; seconds: number };
   videos: number;
+  redeemedRewards: string[];
 };
 
 const KEY = "fl_app";
@@ -34,6 +54,7 @@ const DEFAULT: AppState = {
   milestones: [],
   screen: { day: "", seconds: 0 },
   videos: 0,
+  redeemedRewards: [],
 };
 
 let state: AppState | null = null;
@@ -104,7 +125,6 @@ export const actions = {
         seeds: s.seeds + 50,
         streak,
         lastActive: t,
-        // Cada missão vale 2 regadas: a planta cresce um estágio.
         water: { ...s.water, [pillar]: s.water[pillar] + 2 },
         done: [...s.done, day],
         stickers: s.stickers.includes(sticker) ? s.stickers : [...s.stickers, sticker],
@@ -134,6 +154,16 @@ export const actions = {
   sendVideo() {
     set((s) => ({ ...s, videos: s.videos + 1, seeds: s.seeds + 40 }));
   },
+  redeemReward(rewardId: string, cost: number) {
+    set((s) => {
+      if (s.seeds < cost || s.redeemedRewards.includes(rewardId)) return s;
+      return {
+        ...s,
+        seeds: s.seeds - cost,
+        redeemedRewards: [...s.redeemedRewards, rewardId],
+      };
+    });
+  },
   reset() {
     try {
       localStorage.removeItem(KEY);
@@ -152,6 +182,10 @@ export const MILESTONES = [
   { id: "pediu", label: "Pediu algo sem chorar", emoji: "🤲" },
   { id: "brincou-5", label: "Brincou junto por 5 minutos", emoji: "🧸" },
   { id: "troca-calma", label: "Trocou de atividade sem crise", emoji: "🌈" },
+  { id: "frase-dois", label: "Juntou duas palavras", emoji: "🔗" },
+  { id: "pergunta", label: "Fez uma pergunta", emoji: "❓" },
+  { id: "contou-historia", label: "Contou uma historinha", emoji: "📖" },
+  { id: "ajudou-outro", label: "Ajudou alguém", emoji: "🤝" },
 ];
 
 export const BADGES = [
@@ -163,4 +197,8 @@ export const BADGES = [
   { id: "video", label: "Primeiro vídeo", emoji: "🎬", test: (s: AppState) => s.videos >= 1 },
   { id: "colecionador", label: "5 figurinhas", emoji: "📒", test: (s: AppState) => s.stickers.length >= 5 },
   { id: "jardineiro", label: "500 sementes", emoji: "🧑‍🌾", test: (s: AppState) => s.seeds >= 500 },
+  { id: "explorador", label: "10 missões", emoji: "🗺️", test: (s: AppState) => s.done.length >= 10 },
+  { id: "mestre", label: "20 missões", emoji: "🏆", test: (s: AppState) => s.done.length >= 20 },
+  { id: "lendario", label: "Trilha completa", emoji: "👑", test: (s: AppState) => s.done.length >= 30 },
+  { id: "generoso", label: "Primeira recompensa", emoji: "🎁", test: (s: AppState) => s.redeemedRewards.length >= 1 },
 ];

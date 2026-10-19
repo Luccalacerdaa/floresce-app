@@ -2,8 +2,13 @@
 
 import { notFound, useParams } from "next/navigation";
 import { CadeGame } from "@/components/games/CadeGame";
+import { EmocoesGame } from "@/components/games/EmocoesGame";
 import { EscolhaGame } from "@/components/games/EscolhaGame";
 import { GameShell } from "@/components/games/GameShell";
+import { LinguasGame } from "@/components/games/LinguasGame";
+import { MemoriaGame } from "@/components/games/MemoriaGame";
+import { PaisesGame } from "@/components/games/PaisesGame";
+import { SequenciaGame } from "@/components/games/SequenciaGame";
 import { SomGame } from "@/components/games/SomGame";
 import { SopraGame } from "@/components/games/SopraGame";
 import { TrocaTool } from "@/components/games/TrocaTool";
@@ -31,6 +36,16 @@ export default function GamePage() {
             return <EscolhaGame celebrate={celebrate} score={score} />;
           case "troca":
             return <TrocaTool score={score} />;
+          case "paises":
+            return <PaisesGame celebrate={celebrate} score={score} />;
+          case "linguas":
+            return <LinguasGame celebrate={celebrate} score={score} micLevel={mic.level} micStatus={mic.status} />;
+          case "memoria":
+            return <MemoriaGame celebrate={celebrate} score={score} />;
+          case "emocoes":
+            return <EmocoesGame celebrate={celebrate} score={score} />;
+          case "sequencia":
+            return <SequenciaGame celebrate={celebrate} score={score} />;
         }
       }}
     </GameShell>

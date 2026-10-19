@@ -2,14 +2,16 @@
 
 import { useEffect, useRef, useState } from "react";
 
-// Voz do app: síntese de fala do próprio aparelho, em português.
-export function speak(text: string, { rate = 0.88, pitch = 1.25 } = {}) {
+// Voz do app: síntese de fala do próprio aparelho. Suporta pt-BR, en-US, es-ES.
+export function speak(text: string, lang = "pt-BR", opts: { rate?: number; pitch?: number } = {}) {
+  const { rate = 0.88, pitch = 1.25 } = opts;
   if (typeof window === "undefined" || !("speechSynthesis" in window)) return;
   const u = new SpeechSynthesisUtterance(text);
-  u.lang = "pt-BR";
+  u.lang = lang;
   u.rate = rate;
   u.pitch = pitch;
-  const voice = window.speechSynthesis.getVoices().find((v) => v.lang.toLowerCase().startsWith("pt"));
+  const prefix = lang.slice(0, 2).toLowerCase();
+  const voice = window.speechSynthesis.getVoices().find((v) => v.lang.toLowerCase().startsWith(prefix));
   if (voice) u.voice = voice;
   window.speechSynthesis.cancel();
   window.speechSynthesis.speak(u);

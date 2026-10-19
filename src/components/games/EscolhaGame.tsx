@@ -37,7 +37,7 @@ export function EscolhaGame({ celebrate, score }: { celebrate: () => void; score
   const pair = PAIRS[round % PAIRS.length];
 
   useEffect(() => {
-    const t = setTimeout(() => speak(`${pair[0][1]}… ou ${pair[1][1]}?`, { rate: 0.75 }), 500);
+    const t = setTimeout(() => speak(`${pair[0][1]}… ou ${pair[1][1]}?`, "pt-BR", { rate: 0.75 }), 500);
     return () => clearTimeout(t);
   }, [pair]);
 
@@ -46,9 +46,8 @@ export function EscolhaGame({ celebrate, score }: { celebrate: () => void; score
     setPicked(i);
     chime();
     celebrate();
-    score();
     const word = pair[i][1];
-    speak(`${word}! Você quer ${word}! ${word}!`, { rate: 0.8 });
+    speak(`${word}! Você quer ${word}! ${word}!`, "pt-BR", { rate: 0.8 });
     setTimeout(() => {
       setPicked(null);
       setRound((r) => r + 1);
@@ -70,7 +69,7 @@ export function EscolhaGame({ celebrate, score }: { celebrate: () => void; score
               <span className={picked === i ? "animate-wiggle" : ""}>{emoji}</span>
             </button>
             <button
-              onClick={() => speak(word, { rate: 0.75 })}
+              onClick={() => speak(word, "pt-BR", { rate: 0.75 })}
               className="rounded-full bg-card/80 px-4 py-1.5 text-sm font-semibold"
             >
               🔊 {word}

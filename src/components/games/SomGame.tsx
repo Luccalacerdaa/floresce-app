@@ -35,7 +35,7 @@ export function SomGame({
   function model() {
     // Durante a fala do app, o microfone é ignorado (para não contar a própria voz do app).
     deafUntil.current = Date.now() + 1600;
-    speak(`${animal.s}!`, { rate: 0.75 });
+    speak(`${animal.s}!`, "pt-BR", { rate: 0.75 });
     setPhase("wait");
   }
 
@@ -43,8 +43,7 @@ export function SomGame({
     setPhase("yay");
     chime(true);
     celebrate();
-    score();
-    setTimeout(() => speak(`Isso! ${animal.s}!`), 300);
+    setTimeout(() => speak(`Isso! ${animal.s}!`, "pt-BR", { rate: 0.75 }), 300);
     setTimeout(() => {
       setRound((r) => r + 1);
       setPhase("listen");
