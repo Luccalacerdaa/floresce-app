@@ -20,18 +20,20 @@ export default function TodayPage() {
   const hello = hour < 12 ? "Bom dia" : hour < 18 ? "Boa tarde" : "Boa noite";
 
   return (
-    <div className="space-y-5 px-4 pb-8 pt-4">
+    <div className="space-y-6 px-4 pb-28 pt-5 sm:space-y-5 sm:pb-8 sm:pt-4">
       <Confetti seed={party} />
-      <header className="flex items-center justify-between">
-        <div>
-          <p className="text-sm text-ink-soft">{hello} 👋</p>
-          <h1 className="font-display text-2xl font-medium">O jardim de {s.childName}</h1>
+      <header className="flex items-start justify-between gap-3">
+        <div className="min-w-0 flex-1">
+          <p className="text-base sm:text-sm text-ink-soft">{hello} 👋</p>
+          <h1 className="font-display text-[1.65rem] sm:text-2xl font-medium leading-tight mt-0.5">
+            O jardim de {s.childName}
+          </h1>
         </div>
-        <div className="flex gap-1.5">
-          <span className="rounded-full bg-clay-soft px-2.5 py-1.5 text-sm font-bold" title="Dias seguidos">
+        <div className="flex shrink-0 gap-2">
+          <span className="rounded-full bg-clay-soft px-3 py-2 sm:px-2.5 sm:py-1.5 text-sm font-bold" title="Dias seguidos">
             🔥 {s.streak}
           </span>
-          <span className="rounded-full bg-butter/60 px-2.5 py-1.5 text-sm font-bold" title="Sementes">
+          <span className="rounded-full bg-butter/60 px-3 py-2 sm:px-2.5 sm:py-1.5 text-sm font-bold" title="Sementes">
             🌱 {s.seeds}
           </span>
         </div>
@@ -87,6 +89,19 @@ export default function TodayPage() {
         <div className="flex-1">
           <h2 className="font-semibold leading-tight">Filme 1 minuto da brincadeira</h2>
           <p className="text-xs text-ink-soft">Receba um retorno da fono · {s.videos}/2 nesta semana</p>
+        </div>
+        <span className="text-xl">›</span>
+      </Link>
+
+      {/* Diário de bordo */}
+      <Link
+        href="/app/diario"
+        className="flex items-center gap-4 rounded-[28px] border-2 border-dashed border-butter bg-butter/10 p-4 transition active:scale-[0.98]"
+      >
+        <div className="grid size-14 shrink-0 place-items-center rounded-2xl bg-butter/40 text-3xl">📝</div>
+        <div className="flex-1">
+          <h2 className="font-semibold leading-tight">Diário de bordo</h2>
+          <p className="text-xs text-ink-soft">Registre observações rápidas · +15 🌱</p>
         </div>
         <span className="text-xl">›</span>
       </Link>

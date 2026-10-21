@@ -2,7 +2,7 @@ import Link from "next/link";
 import type { ComponentProps } from "react";
 
 const base =
-  "inline-flex min-h-14 items-center justify-center gap-2 rounded-full px-7 text-[1.05rem] font-semibold transition active:scale-[0.98] focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-clay disabled:opacity-40";
+  "inline-flex min-h-[52px] sm:min-h-14 items-center justify-center gap-2.5 rounded-full px-6 sm:px-7 text-base sm:text-[1.05rem] font-semibold transition active:scale-[0.97] focus-visible:outline-3 focus-visible:outline-offset-3 focus-visible:outline-clay disabled:opacity-40 touch-manipulation";
 
 export const buttonStyles = {
   primary: `${base} bg-clay text-white shadow-[0_10px_24px_-10px_var(--color-clay)] hover:bg-clay-deep`,

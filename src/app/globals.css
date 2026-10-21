@@ -131,6 +131,8 @@
 html {
   -webkit-text-size-adjust: 100%;
   scroll-behavior: smooth;
+  /* Mobile-first: previne zoom em inputs no iOS */
+  touch-action: manipulation;
 }
 
 body {
@@ -138,6 +140,19 @@ body {
   color: var(--color-ink);
   font-family: var(--font-sans), system-ui, sans-serif;
   -webkit-font-smoothing: antialiased;
+  /* Melhor legibilidade em mobile */
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+/* Tap target mínimo de 44px para acessibilidade mobile */
+@media (max-width: 640px) {
+  button,
+  a,
+  [role="button"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
 }
 
 /* Textura de papel, bem sutil. */

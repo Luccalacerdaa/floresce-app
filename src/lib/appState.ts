@@ -24,6 +24,14 @@ export const REWARD_CHEST: RewardItem[] = [
   { id: "picnic", name: "Piquenique", emoji: "🧺", cost: 600, description: "Um piquenique especial no quintal ou parque." },
 ];
 
+export type DiaryEntry = {
+  id: string;
+  date: string;
+  text: string;
+  mood: "😊" | "😐" | "😢" | "🤩" | "😴";
+  tags: string[];
+};
+
 export type AppState = {
   childName: string;
   seeds: number;
@@ -37,6 +45,7 @@ export type AppState = {
   screen: { day: string; seconds: number };
   videos: number;
   redeemedRewards: string[];
+  diary: DiaryEntry[];
 };
 
 const KEY = "fl_app";
@@ -55,6 +64,7 @@ const DEFAULT: AppState = {
   screen: { day: "", seconds: 0 },
   videos: 0,
   redeemedRewards: [],
+  diary: [],
 };
 
 let state: AppState | null = null;
@@ -163,6 +173,13 @@ export const actions = {
         redeemedRewards: [...s.redeemedRewards, rewardId],
       };
     });
+  },
+  addDiaryEntry(entry: Omit<DiaryEntry, "id">) {
+    set((s) => ({
+      ...s,
+      diary: [{ ...entry, id: crypto.randomUUID() }, ...s.diary],
+      seeds: s.seeds + 15,
+    }));
   },
   reset() {
     try {
